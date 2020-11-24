@@ -13,7 +13,8 @@ namespace WebStore.Controllers
         {
             // Обработка данных
 
-            return Content(_Configuration["ControllerActionText"]);
+            //return Content(_Configuration["ControllerActionText"]);
+            return View();
         }
 
         public IActionResult SecondAction()
