@@ -1,15 +1,23 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = "_Layout";
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>First View from Home controller</p>
-    <p>Всем привет!</p>
-    <p>
-        <a href="~/Home/Employees">Сотрудники</a>
-    </p>
-</body>
-</html>
+<partial name="Partial/_Slider"/>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <partial name="Partial/_LeftSideBar"/>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <partial name="Partial/_FeaturesItems"/>
+
+                <partial name="Partial/_CategoryTab"/>
+
+                <partial name="Partial/_RecomendedItems"/>
+            </div>
+        </div>
+    </div>
+</section>
