@@ -21,13 +21,7 @@ namespace WebStore.Controllers
 
         public HomeController(IConfiguration Configuration) => _Configuration = Configuration;
 
-        public IActionResult Index()
-        {
-            // Обработка данных
-
-            //return Content(_Configuration["ControllerActionText"]);
-            return View();
-        }
+        public IActionResult Index() => View();
 
         public IActionResult SecondAction()
         {
