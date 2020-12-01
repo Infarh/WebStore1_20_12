@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Microsoft.AspNetCore.Mvc;
+
 using WebStore.Data;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
@@ -27,20 +29,25 @@ namespace WebStore.Controllers
         public IActionResult Details(int id)
         {
             var employee = _Employees.Get(id);
-            if(employee is not null)
+            if (employee is not null)
                 return View(employee);
 
             return NotFound();
         }
 
+        public IActionResult Create() => View("Edit", new EmployeesViewModel());
+
         #region Edit
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
+            if (id is null)
+                return View(new EmployeesViewModel());
+
             if (id < 0)
                 return BadRequest();
 
-            var employee = _Employees.Get(id);
+            var employee = _Employees.Get((int)id);
             if (employee is null)
                 return NotFound();
 
@@ -48,8 +55,8 @@ namespace WebStore.Controllers
             {
                 Id = employee.Id,
                 LastName = employee.LastName,
-                FirstName = employee.FirstName,
-                Patronymic = employee.Patronymic,
+                Name = employee.FirstName,
+                MiddleName = employee.Patronymic,
                 Age = employee.Age,
             });
         }
@@ -64,12 +71,15 @@ namespace WebStore.Controllers
             {
                 Id = Model.Id,
                 LastName = Model.LastName,
-                FirstName = Model.FirstName,
-                Patronymic = Model.Patronymic,
+                FirstName = Model.Name,
+                Patronymic = Model.MiddleName,
                 Age = Model.Age,
             };
 
-            _Employees.Update(employee);
+            if (employee.Id == 0)
+                _Employees.Add(employee);
+            else
+                _Employees.Update(employee);
 
             return RedirectToAction("Index");
         }
@@ -91,8 +101,8 @@ namespace WebStore.Controllers
             {
                 Id = employee.Id,
                 LastName = employee.LastName,
-                FirstName = employee.FirstName,
-                Patronymic = employee.Patronymic,
+                Name = employee.FirstName,
+                MiddleName = employee.Patronymic,
                 Age = employee.Age,
             });
         }
@@ -102,7 +112,7 @@ namespace WebStore.Controllers
         {
             _Employees.Delete(id);
             return RedirectToAction("Index");
-        } 
+        }
 
         #endregion
     }

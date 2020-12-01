@@ -4,6 +4,11 @@
 
 <div class="container">
     <h3>Сотрудники</h3>
+    
+    <div>
+        <a asp-action="Create" class="btn btn-primary">Создать</a>
+    </div>
+
     <table class="table">
         <thead>
         <tr>
@@ -37,7 +42,11 @@
                     </a>
                 </td>
                 <td>
-                   
+                    <form asp-action="DeleteConfirmed" asp-route-id="@employee.Id">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         }

@@ -4,7 +4,7 @@
 }
 
 <div class="container">
-    <h3>Вы уверены, что хотите удалить @Model.LastName @Model.FirstName @Model.Patronymic?</h3>
+    <h3>Вы уверены, что хотите удалить @Model.LastName @Model.Name @Model.MiddleName?</h3>
     
     <div>
         <hr />
@@ -17,10 +17,10 @@
                 @Html.DisplayFor(model => model.Id)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.Name)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FirstName)
+                @Html.DisplayFor(model => model.Name)
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.LastName)
@@ -29,10 +29,10 @@
                 @Html.DisplayFor(model => model.LastName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Patronymic)
+                @Html.DisplayNameFor(model => model.MiddleName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Patronymic)
+                @Html.DisplayFor(model => model.MiddleName)
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Age)
