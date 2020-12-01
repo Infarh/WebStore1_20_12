@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using WebStore.Data;
 
@@ -12,14 +13,11 @@ namespace WebStore.Controllers
 
         public IActionResult Index() => View();
 
+        public IActionResult Throw(string id) => throw new ApplicationException(id);
+
         public IActionResult SecondAction()
         {
             return Content("Second controller action");
-        }
-
-        public IActionResult Employees()
-        {
-            return View(TestData.Employees);
         }
 
         public IActionResult Blogs() => View();

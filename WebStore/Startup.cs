@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.StaticFiles.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStore.Infrastructure.Conventions;
+using WebStore.Infrastructure.Middleware;
 
 namespace WebStore
 {
@@ -16,7 +18,13 @@ namespace WebStore
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            //services.AddMvc(opt => opt.Conventions.Add(new WebStoreControllerConvention()));
+            services
+               .AddControllersWithViews(opt =>
+                {
+                    //opt.Conventions.Add(new WebStoreControllerConvention());
+                })
+               .AddRazorRuntimeCompilation();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -29,6 +37,19 @@ namespace WebStore
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //app.UseMiddleware<TestMiddleware>();
+            //app.UseMiddleware(typeof(TestMiddleware));
+
+            //app.Map(
+            //    "/Hello", 
+            //    context => context.Run(async request => await request.Response.WriteAsync("Hello World!")));
+
+            //app.MapWhen(
+            //    context => context.Request.Query.ContainsKey("id") && context.Request.Query["id"] == "5",
+            //    context => context.Run(async request => await request.Response.WriteAsync("Hello World with id:5!")));
+
+            app.UseWelcomePage("/welcome");
 
             app.UseEndpoints(endpoints =>
             {
