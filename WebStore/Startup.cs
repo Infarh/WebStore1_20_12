@@ -27,6 +27,7 @@ namespace WebStore
 
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
             //services.AddTransient<IEmployeesData>(service => new InMemoryEmployeesData());
+            services.AddTransient<IProductData, InMemoryProductData>();
 
             //services.AddMvc(opt => opt.Conventions.Add(new WebStoreControllerConvention()));
             services
