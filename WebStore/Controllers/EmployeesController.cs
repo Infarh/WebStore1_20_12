@@ -64,6 +64,14 @@ namespace WebStore.Controllers
         [HttpPost]
         public IActionResult Edit(EmployeesViewModel Model)
         {
+            if (Model.Age == 25)
+                ModelState.AddModelError("Age", "Возраст не должен быть равен 25");
+
+            if(Model.LastName == "Иванов" && Model.Age == 30)
+                ModelState.AddModelError("", "Странный человек...");
+
+            if (!ModelState.IsValid) return View(Model);
+          
             if (Model is null)
                 throw new ArgumentNullException(nameof(Model));
 
