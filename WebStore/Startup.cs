@@ -1,9 +1,6 @@
-﻿using System;
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.StaticFiles.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,10 +8,9 @@ using Microsoft.Extensions.Hosting;
 
 using WebStore.DAL.Context;
 using WebStore.Data;
-using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.Infrastructure.Middleware;
-using WebStore.Infrastructure.Services;
+using WebStore.Infrastructure.Services.ImMemory;
+using WebStore.Infrastructure.Services.InSQL;
 
 namespace WebStore
 {
@@ -35,7 +31,8 @@ namespace WebStore
 
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
             //services.AddTransient<IEmployeesData>(service => new InMemoryEmployeesData());
-            services.AddTransient<IProductData, InMemoryProductData>();
+            //services.AddTransient<IProductData, InMemoryProductData>();
+            services.AddTransient<IProductData, SqlProductData>();
 
             //services.AddMvc(opt => opt.Conventions.Add(new WebStoreControllerConvention()));
             services
