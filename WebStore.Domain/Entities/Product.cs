@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using WebStore.Domain.Entityes.Base;
-using WebStore.Domain.Entityes.Base.Interfaces;
+using WebStore.Domain.Entities.Base;
+using WebStore.Domain.Entities.Base.Interfaces;
 
-namespace WebStore.Domain.Entityes
+namespace WebStore.Domain.Entities
 {
     public class Product : NamedEntity, IOrderedEntity
     {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-using WebStore.Domain.Entityes;
+using WebStore.Domain.Entities;
 
 namespace WebStore.DAL.Context
 {

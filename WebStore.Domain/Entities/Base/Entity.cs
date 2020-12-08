@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebStore.Domain.Entityes.Base.Interfaces;
+using WebStore.Domain.Entities.Base.Interfaces;
 
-namespace WebStore.Domain.Entityes.Base
+namespace WebStore.Domain.Entities.Base
 {
     public abstract class Entity : IEntity
     {
