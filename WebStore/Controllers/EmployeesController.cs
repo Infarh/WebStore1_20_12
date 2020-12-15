@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using WebStore.Data;
+using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 using WebStore.ViewModels;
@@ -12,6 +14,7 @@ using WebStore.ViewModels;
 namespace WebStore.Controllers
 {
     //[Route("Users")]
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly IEmployeesData _Employees;
@@ -35,10 +38,12 @@ namespace WebStore.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Create() => View("Edit", new EmployeesViewModel());
 
         #region Edit
 
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(int? id)
         {
             if (id is null)
@@ -62,16 +67,17 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(EmployeesViewModel Model)
         {
             if (Model.Age == 25)
                 ModelState.AddModelError("Age", "Возраст не должен быть равен 25");
 
-            if(Model.LastName == "Иванов" && Model.Age == 30)
+            if (Model.LastName == "Иванов" && Model.Age == 30)
                 ModelState.AddModelError("", "Странный человек...");
 
             if (!ModelState.IsValid) return View(Model);
-          
+
             if (Model is null)
                 throw new ArgumentNullException(nameof(Model));
 
@@ -96,6 +102,7 @@ namespace WebStore.Controllers
 
         #region Delete
 
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Delete(int id)
         {
             if (id <= 0)
@@ -116,6 +123,7 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult DeleteConfirmed(int id)
         {
             _Employees.Delete(id);
