@@ -12,7 +12,8 @@ using WebStore.DAL.Context;
 using WebStore.Data;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.Infrastructure.Services.ImMemory;
+using WebStore.Infrastructure.Services.InCookies;
+using WebStore.Infrastructure.Services.InMemory;
 using WebStore.Infrastructure.Services.InSQL;
 
 namespace WebStore
@@ -71,6 +72,7 @@ namespace WebStore
             //services.AddTransient<IEmployeesData>(service => new InMemoryEmployeesData());
             //services.AddTransient<IProductData, InMemoryProductData>();
             services.AddTransient<IProductData, SqlProductData>();
+            services.AddScoped<ICartService, InCookiesCartService>();
 
             //services.AddMvc(opt => opt.Conventions.Add(new WebStoreControllerConvention()));
             services

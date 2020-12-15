@@ -6,7 +6,7 @@ using WebStore.Domain;
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
 
-namespace WebStore.Infrastructure.Services.ImMemory
+namespace WebStore.Infrastructure.Services.InMemory
 {
     [Obsolete("Класс устарел потому что не надо размещать данные в памяти. Пользуйтесь классом SqlProductData", true)]
     public class InMemoryProductData : IProductData
