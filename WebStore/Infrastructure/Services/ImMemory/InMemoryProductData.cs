@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebStore.Data;
 using WebStore.Domain;
@@ -7,11 +8,14 @@ using WebStore.Infrastructure.Interfaces;
 
 namespace WebStore.Infrastructure.Services.ImMemory
 {
+    [Obsolete("Класс устарел потому что не надо размещать данные в памяти. Пользуйтесь классом SqlProductData", true)]
     public class InMemoryProductData : IProductData
     {
         public IEnumerable<Section> GetSections() => TestData.Sections;
+        public Section GetSectionById(int id) => throw new NotSupportedException();
 
         public IEnumerable<Brand> GetBrands() => TestData.Brands;
+        public Brand GetBrandById(int id) => throw new NotSupportedException();
 
         public IEnumerable<Product> GetProducts(ProductFilter Filter = null)
         {
@@ -25,5 +29,7 @@ namespace WebStore.Infrastructure.Services.ImMemory
 
             return query;
         }
+
+        public Product GetProductById(int id) => throw new NotSupportedException();
     }
 }
