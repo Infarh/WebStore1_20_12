@@ -73,6 +73,7 @@ namespace WebStore
             //services.AddTransient<IProductData, InMemoryProductData>();
             services.AddTransient<IProductData, SqlProductData>();
             services.AddScoped<ICartService, InCookiesCartService>();
+            services.AddScoped<IOrderService, SqlOrderService>();
 
             //services.AddMvc(opt => opt.Conventions.Add(new WebStoreControllerConvention()));
             services
