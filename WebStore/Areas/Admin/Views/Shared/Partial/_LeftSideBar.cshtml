@@ -1,0 +1,22 @@
+﻿<div class="sidebar-collapse">
+    <ul class="nav" id="main-menu">
+
+        <li class="active-link">
+            <a asp-controller="Home" asp-action="Index" asp-area="Admin">
+                <i class="fa fa-desktop "></i>Админка @*<span class="badge">Included</span>*@
+            </a>
+        </li>
+
+
+        <li>
+            <a asp-controller="Catalog" asp-action="Index" asp-area="Admin">
+                <i class="fa fa-table "></i>Каталог
+            </a>
+        </li>
+        <li>
+            <a asp-controller="Users" asp-action="Index" asp-area="Admin">
+                <i class="fa fa-edit "></i>Пользователи
+            </a>
+        </li>
+    </ul>
+</div>

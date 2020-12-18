@@ -73,6 +73,7 @@ namespace WebStore
             //services.AddTransient<IProductData, InMemoryProductData>();
             services.AddTransient<IProductData, SqlProductData>();
             services.AddScoped<ICartService, InCookiesCartService>();
+            services.AddScoped<IOrderService, SqlOrderService>();
 
             //services.AddMvc(opt => opt.Conventions.Add(new WebStoreControllerConvention()));
             services
@@ -118,6 +119,11 @@ namespace WebStore
             {
                 endpoints.MapGet("/greetings", async ctx => await ctx.Response.WriteAsync(_Configuration["greetings"]));
                 endpoints.MapGet("/HelloWorld", async ctx => await ctx.Response.WriteAsync("Hello World!"));
+
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
 
                 endpoints.MapControllerRoute(
                     name: "default",

@@ -3,9 +3,17 @@
     <ul class="nav navbar-nav">
         @if (User.IsInRole(Role.Administrator))
         {
-            <li><a href="#"><i class="fa fa-keyboard-o"></i> Админка</a></li>
+            <li>
+                <a asp-controller="Home" asp-action="Index" asp-area="Admin">
+                    <i class="fa fa-keyboard-o"></i> Админка
+                </a>
+            </li>
         }
-        <li><a href="#"><i class="fa fa-user"></i> @User.Identity!.Name</a></li>
+        <li>
+            <a asp-controller="UserProfile" asp-action="Index">
+                <i class="fa fa-user"></i> @User.Identity!.Name
+            </a>
+        </li>
         <li><a href="#"><i class="fa fa-crosshairs"></i> Заказы</a></li>
         <li><a href="#"><i class="fa fa-shopping-cart"></i> Корзина</a></li>
         <li><a asp-controller="Account" asp-action="Logout"><i class="fa fa-lock"></i> Выход</a></li>

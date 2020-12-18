@@ -34,7 +34,7 @@ namespace WebStore.Infrastructure.Services.InCookies
                     return cart;
                 }
 
-                ReplaceCookies(cookies, cart_cookie);
+                //ReplaceCookies(cookies, cart_cookie);
                 return JsonConvert.DeserializeObject<Cart>(cart_cookie);
             }
             set => ReplaceCookies(_HttpContextAccessor.HttpContext!.Response.Cookies, JsonConvert.SerializeObject(value));
