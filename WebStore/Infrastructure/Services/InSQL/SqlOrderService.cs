@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using WebStore.DAL.Context;
+using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.Entities.Orders;
 using WebStore.Infrastructure.Interfaces;
@@ -51,20 +54,51 @@ namespace WebStore.Infrastructure.Services.InSQL
                 Date = DateTime.Now,
             };
 
-            foreach (var (product_model, quantity) in Cart.Items)
-            {
-                var product = await _db.Products.FindAsync(product_model.Id);
-                if (product is null) continue;
+            var product_ids = Cart.Items.Select(i => i.Product.Id).ToArray();
+            var cart_products = await _db.Products
+               .Where(p => product_ids.Contains(p.Id))
+               .ToArrayAsync();
 
-                var order_item = new OrderItem
+            //var items = Cart.Items.Join(
+            //    cart_products,
+            //    cart_item => cart_item.Product.Id,
+            //    product => product.Id,
+            //    (cart_item, product) => new OrderItem
+            //    {
+            //        Order = order,
+            //        Price = product.Price,
+            //        Quantity = cart_item.Quantity,
+            //        Product = product
+            //    });
+
+            var items =
+                from cart_item in Cart.Items
+                join product in cart_products 
+                    on cart_item.Product.Id equals product.Id
+                select new OrderItem
                 {
                     Order = order,
                     Price = product.Price,
-                    Quantity = quantity,
+                    Quantity = cart_item.Quantity,
                     Product = product
                 };
+
+            foreach (var order_item in items)
                 order.Items.Add(order_item);
-            }
+
+            //foreach (var (product_model, quantity) in Cart.Items)
+            //{
+            //    if (!cart_products.TryGetValue(product_model.Id, out var product)) continue;
+
+            //    var order_item = new OrderItem
+            //    {
+            //        Order = order,
+            //        Price = product.Price,
+            //        Quantity = quantity,
+            //        Product = product
+            //    };
+            //    order.Items.Add(order_item);
+            //}
 
             await _db.Orders.AddAsync(order);
 
