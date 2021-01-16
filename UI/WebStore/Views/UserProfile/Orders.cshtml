@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserOrderViewModel>
+﻿@model IEnumerable<WebStore.Domain.ViewModels.UserOrderViewModel>
 @{
     Layout = "_UserProfileLayout";
     ViewData["Title"] = "Заказы";
@@ -16,14 +16,14 @@
     </thead>
     <tbody>
     @{ var i = 1; }
-    @foreach (var (_, name, phone, address, total_sum) in Model)
+    @foreach (var order in Model)
     {
         <tr>
             <td>@(i++)</td>
-            <td>@name</td>
-            <td>@address</td>
-            <td>@phone</td>
-            <td>@total_sum</td>
+            <td>@order.Name</td>
+            <td>@order.Address</td>
+            <td>@order.Phone</td>
+            <td>@order.TotalSum</td>
         </tr>
     }
     </tbody>

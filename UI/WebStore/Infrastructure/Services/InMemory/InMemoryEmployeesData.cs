@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebStore.Data;
+using WebStore.Domain.Models;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.Models;
 
 namespace WebStore.Infrastructure.Services.InMemory
 {

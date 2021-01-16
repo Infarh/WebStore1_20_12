@@ -1,4 +1,4 @@
-﻿namespace WebStore.Models
+﻿namespace WebStore.Domain.Models
 {
     /// <summary>Сотрудник</summary>
     public class Employee
