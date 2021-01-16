@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-
+using Microsoft.Extensions.Configuration;
 using WebStore.Clients.Base;
 using WebStore.Interfaces.TestAPI;
 
@@ -11,7 +11,7 @@ namespace WebStore.Clients.Values
 {
     public class ValuesClient : BaseClient, IValuesServices
     {
-        public ValuesClient(HttpClient Client) : base(Client, "api/values") { }
+        public ValuesClient(IConfiguration Configuration) : base(Configuration, "api/values") { }
 
         public IEnumerable<string> Get()
         {
