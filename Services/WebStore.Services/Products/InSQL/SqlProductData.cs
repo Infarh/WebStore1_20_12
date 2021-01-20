@@ -3,8 +3,10 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Domain;
+using WebStore.Domain.DTO.Products;
 using WebStore.Domain.Entities;
 using WebStore.Interfaces.Services;
+using WebStore.Services.Mapping;
 
 namespace WebStore.Services.Products.InSQL
 {
@@ -14,20 +16,28 @@ namespace WebStore.Services.Products.InSQL
 
         public SqlProductData(WebStoreDB db) => _db = db;
 
-        public IEnumerable<Section> GetSections() => _db.Sections.Include(section => section.Products);
+        public IEnumerable<SectionDTO> GetSections() => _db.Sections
+           .Include(section => section.Products)
+           .AsEnumerable()
+           .ToDTO();
 
         //public Section GetSectionById(int id) => _db.Sections.Find(id);
-        public Section GetSectionById(int id) => _db.Sections
+        public SectionDTO GetSectionById(int id) => _db.Sections
            .Include(section => section.Products)
-           .FirstOrDefault(s => s.Id == id);
+           .FirstOrDefault(s => s.Id == id)
+           .ToDTO();
 
-        public IEnumerable<Brand> GetBrands() => _db.Brands.Include(brand => brand.Products);
+        public IEnumerable<BrandDTO> GetBrands() => _db.Brands
+           .Include(brand => brand.Products)
+           .AsEnumerable()
+           .ToDTO();
 
-        public Brand GetBrandById(int id) => _db.Brands
+        public BrandDTO GetBrandById(int id) => _db.Brands
            .Include(b => b.Products)
-           .FirstOrDefault(b => b.Id == id);
+           .FirstOrDefault(b => b.Id == id)
+           .ToDTO();
 
-        public IEnumerable<Product> GetProducts(ProductFilter Filter = null)
+        public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null)
         {
             IQueryable<Product> query = _db.Products
                 .Include(p => p.Brand)
@@ -44,12 +54,13 @@ namespace WebStore.Services.Products.InSQL
                     query = query.Where(product => product.SectionId == Filter.SectionId);
             }
 
-            return query;
+            return query.AsEnumerable().ToDTO();
         }
 
-        public Product GetProductById(int id) => _db.Products
+        public ProductDTO GetProductById(int id) => _db.Products
            .Include(p => p.Brand)
            .Include(p => p.Section)
-           .FirstOrDefault(p => p.Id == id);
+           .FirstOrDefault(p => p.Id == id)
+           .ToDTO();
     }
 }

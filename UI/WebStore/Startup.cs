@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Net.Http;
+using System.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,10 +10,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using WebStore.Clients.Employees;
+using WebStore.Clients.Orders;
+using WebStore.Clients.Products;
+using WebStore.Clients.Values;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
+using WebStore.Interfaces.TestAPI;
 using WebStore.Services.Data;
 using WebStore.Services.Products.InCookies;
 using WebStore.Services.Products.InMemory;
@@ -29,7 +36,7 @@ namespace WebStore
             services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(_Configuration.GetConnectionString("Default")));
             services.AddTransient<WebStoreDbInitializer>();
 
-            services.AddIdentity<User, Role>(/*opt => { }*/)
+            services.AddIdentity<User, Role>()
                .AddEntityFrameworkStores<WebStoreDB>()
                .AddDefaultTokenProviders();
 
@@ -64,23 +71,18 @@ namespace WebStore
                 opt.SlidingExpiration = true;
             });
             
-            //services.AddTransient<IService, ServiceImplementation>();
-            //services.AddScoped<IService, ServiceImplementation>();
-            //services.AddSingleton<IService, ServiceImplementation>();
 
-            services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
-            //services.AddTransient<IEmployeesData>(service => new InMemoryEmployeesData());
-            //services.AddTransient<IProductData, InMemoryProductData>();
-            services.AddTransient<IProductData, SqlProductData>();
+            //services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
+            services.AddTransient<IEmployeesData, EmployeesClient>();
+            //services.AddTransient<IProductData, SqlProductData>();
+            services.AddTransient<IProductData, ProductsClient>();
             services.AddScoped<ICartService, InCookiesCartService>();
-            services.AddScoped<IOrderService, SqlOrderService>();
+            //services.AddScoped<IOrderService, SqlOrderService>();
+            services.AddScoped<IOrderService, OrdersClient>();
+            services.AddScoped<IValuesServices, ValuesClient>();
 
-            //services.AddMvc(opt => opt.Conventions.Add(new WebStoreControllerConvention()));
             services
-               .AddControllersWithViews(opt =>
-                {
-                    //opt.Conventions.Add(new WebStoreControllerConvention());
-                })
+               .AddControllersWithViews()
                .AddRazorRuntimeCompilation();
         }
 
@@ -102,17 +104,6 @@ namespace WebStore
             
             app.UseAuthorization();
 
-            //app.UseMiddleware<TestMiddleware>();
-            //app.UseMiddleware(typeof(TestMiddleware));
-
-            //app.Map(
-            //    "/Hello", 
-            //    context => context.Run(async request => await request.Response.WriteAsync("Hello World!")));
-
-            //app.MapWhen(
-            //    context => context.Request.Query.ContainsKey("id") && context.Request.Query["id"] == "5",
-            //    context => context.Run(async request => await request.Response.WriteAsync("Hello World with id:5!")));
-
             app.UseWelcomePage("/welcome");
 
             app.UseEndpoints(endpoints =>
@@ -128,10 +119,6 @@ namespace WebStore
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                // http://localhost:5000 -> controller == "Home" action == "Index"
-                // http://localhost:5000/Products -> controller == "Products" action == "Index"
-                // http://localhost:5000/Products/Page -> controller == "Products" action == "Page"
-                // http://localhost:5000/Products/Page/5 -> controller == "Products" action == "Page" id = "5"
             });
         }
     }
