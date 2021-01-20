@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using WebStore.Domain.Models;
+using WebStore.Interfaces;
 using WebStore.Interfaces.Services;
 
 namespace WebStore.ServiceHosting.Controllers
 {
     //[Route("api/[controller]")] // [controller] = EmployeesApi
-    [Route("api/employees")]
+    [Route(WebAPI.Employees)]
     [ApiController]
     public class EmployeesApiController : ControllerBase, IEmployeesData
     {

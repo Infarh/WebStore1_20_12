@@ -2,10 +2,11 @@
 using System.Linq;
 
 using Microsoft.AspNetCore.Mvc;
+using WebStore.Interfaces;
 
 namespace WebStore.ServiceHosting.Controllers
 {
-    [Route("api/[controller]")] // http://localhost:5001/api/values
+    [Route(WebAPI.Values)] // http://localhost:5001/api/values
     [ApiController]
     public class ValuesController : ControllerBase
     {

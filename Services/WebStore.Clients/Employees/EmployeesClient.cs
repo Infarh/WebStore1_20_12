@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 
 using WebStore.Clients.Base;
 using WebStore.Domain.Models;
+using WebStore.Interfaces;
 using WebStore.Interfaces.Services;
 
 namespace WebStore.Clients.Employees
@@ -14,7 +15,7 @@ namespace WebStore.Clients.Employees
         private readonly ILogger<EmployeesClient> _Logger;
 
         public EmployeesClient(IConfiguration Configuration, ILogger<EmployeesClient> Logger)
-            : base(Configuration, "api/employees") =>
+            : base(Configuration, WebAPI.Employees) =>
             _Logger = Logger;
 
 
