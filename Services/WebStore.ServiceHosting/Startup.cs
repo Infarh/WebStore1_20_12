@@ -26,7 +26,7 @@ namespace WebStore.ServiceHosting
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<WebStoreDB>(
-                opt => opt.UseSqlServer(Configuration["Default"]));
+                opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddTransient<WebStoreDbInitializer>();
 
             services.AddIdentity<User, Role>()
