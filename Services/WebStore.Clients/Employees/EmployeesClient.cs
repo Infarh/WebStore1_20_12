@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -19,29 +18,14 @@ namespace WebStore.Clients.Employees
             _Logger = Logger;
 
 
-        public IEnumerable<Employee> Get()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Employee> Get() => Get<IEnumerable<Employee>>(Address);
 
-        public Employee Get(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public Employee Get(int id) => Get<Employee>($"{Address}/{id}");
 
-        public int Add(Employee employee)
-        {
-            throw new NotImplementedException();
-        }
+        public int Add(Employee employee) => Post(Address, employee).Content.ReadAsAsync<int>().Result;
 
-        public void Update(Employee employee)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(Employee employee) => Put(Address, employee);
 
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public bool Delete(int id) => Delete($"{Address}/{id}").IsSuccessStatusCode;
     }
 }
