@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
+using WebStore.Services.Mapping;
 
 namespace WebStore.Areas.Admin.Controllers
 {
@@ -15,13 +14,13 @@ namespace WebStore.Areas.Admin.Controllers
 
         public CatalogController(IProductData ProductData) => _ProductData = ProductData;
 
-        public IActionResult Index() => View(_ProductData.GetProducts());
+        public IActionResult Index() => View(_ProductData.GetProducts().FromDTO());
 
         public IActionResult Edit(int id)
         {
             var product = _ProductData.GetProductById(id);
             if (product is null) return NotFound();
-            return View(product);
+            return View(product.FromDTO());
         }
 
         [HttpPost]
@@ -39,7 +38,7 @@ namespace WebStore.Areas.Admin.Controllers
         {
             var product = _ProductData.GetProductById(id);
             if (product is null) return NotFound();
-            return View(product);
+            return View(product.FromDTO());
         }
 
         [HttpPost]
