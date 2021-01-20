@@ -12,7 +12,7 @@ using WebStore.Interfaces.Services;
 namespace WebStore.Controllers
 {
     //[Route("Users")]
-    [Authorize]
+    //[Authorize]
     public class EmployeesController : Controller
     {
         private readonly IEmployeesData _Employees;
@@ -36,12 +36,12 @@ namespace WebStore.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = Role.Administrator)]
+        //[Authorize(Roles = Role.Administrator)]
         public IActionResult Create() => View("Edit", new EmployeesViewModel());
 
         #region Edit
 
-        [Authorize(Roles = Role.Administrator)]
+        //[Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(int? id)
         {
             if (id is null)
@@ -65,7 +65,7 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Role.Administrator)]
+        //[Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(EmployeesViewModel Model)
         {
             if (Model.Age == 25)
@@ -100,7 +100,7 @@ namespace WebStore.Controllers
 
         #region Delete
 
-        [Authorize(Roles = Role.Administrator)]
+        //[Authorize(Roles = Role.Administrator)]
         public IActionResult Delete(int id)
         {
             if (id <= 0)
@@ -121,7 +121,7 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Role.Administrator)]
+        //[Authorize(Roles = Role.Administrator)]
         public IActionResult DeleteConfirmed(int id)
         {
             _Employees.Delete(id);

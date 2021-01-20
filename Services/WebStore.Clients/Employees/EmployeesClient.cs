@@ -24,7 +24,11 @@ namespace WebStore.Clients.Employees
 
         public int Add(Employee employee) => Post(Address, employee).Content.ReadAsAsync<int>().Result;
 
-        public void Update(Employee employee) => Put(Address, employee);
+        public void Update(Employee employee)
+        {
+            _Logger.LogInformation("Редактирование сотрудника с id:{0}", employee.Id);
+            Put(Address, employee);
+        }
 
         public bool Delete(int id) => Delete($"{Address}/{id}").IsSuccessStatusCode;
     }

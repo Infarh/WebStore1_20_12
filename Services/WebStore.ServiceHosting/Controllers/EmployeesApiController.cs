@@ -57,6 +57,15 @@ namespace WebStore.ServiceHosting.Controllers
         public void Update(/*int id,*/ Employee employee) => _EmployeesData.Update(employee);
 
         [HttpDelete("{id}")]
-        public bool Delete(int id) => _EmployeesData.Delete(id);
+        public bool Delete(int id)
+        {
+            var result = _EmployeesData.Delete(id);
+            if(result)
+                _Logger.LogInformation("Сотрудник с id:{0} успешно удалён", id);
+            else
+                _Logger.LogWarning("ошибка при попытке удаления сотрдуника с id:{0}", id);
+
+            return result;
+        }
     }
 }
