@@ -2,14 +2,13 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
-using WebStore.Domain.Models;
+using WebStore.Domain.Entities;
 using WebStore.Interfaces;
 using WebStore.Interfaces.Services;
 
 namespace WebStore.ServiceHosting.Controllers
 {
-    //[Route("api/[controller]")] // [controller] = EmployeesApi
+    /// <summary>API управления сотрудниками</summary>
     [Route(WebAPI.Employees)]
     [ApiController]
     public class EmployeesApiController : ControllerBase, IEmployeesData
@@ -23,12 +22,19 @@ namespace WebStore.ServiceHosting.Controllers
             _Logger = Logger;
         }
 
+        /// <summary>Получение всех сотрудников</summary>
+        /// <returns>Список сотрудников</returns>
         [HttpGet]
         public IEnumerable<Employee> Get() => _EmployeesData.Get();
 
+        /// <summary>Получение сотрудника по идентификатору</summary>
+        /// <param name="id">Идентификатор сотрудника</param>
         [HttpGet("{id}")]
         public Employee Get(int id) => _EmployeesData.Get(id);
 
+        /// <summary>Добавление нового сотрудника</summary>
+        /// <param name="employee">Добавляемый сотрудник</param>
+        /// <returns>Идентификатор нового сотрудника</returns>
         [HttpPost]
         public int Add(Employee employee)
         {
@@ -45,7 +51,7 @@ namespace WebStore.ServiceHosting.Controllers
             var id = _EmployeesData.Add(employee);
 
             if (id > 0)
-                _Logger.LogInformation("Cотрудник [id:{0}] {1} {2} {3} добавлен успешно",
+                _Logger.LogInformation("Сотрудник [id:{0}] {1} {2} {3} добавлен успешно",
                     employee.Id, employee.LastName, employee.FirstName, employee.Patronymic);
             else
                 _Logger.LogWarning("Ошибка при добавлении сотрудника {0} {1} {2}",
@@ -54,9 +60,14 @@ namespace WebStore.ServiceHosting.Controllers
             return id;
         }
 
+        /// <summary>Редактирование сотрудника</summary>
+        /// <param name="employee">Информация для изменения данных сотрудника</param>
         [HttpPut/*("{id}")*/]
         public void Update(/*int id,*/ Employee employee) => _EmployeesData.Update(employee);
 
+        /// <summary>Удаление сотрудника по его id</summary>
+        /// <param name="id">Идентификатор удаляемого сотрудника</param>
+        /// <returns>Истина, если сотрудник был удалён</returns>
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
@@ -64,7 +75,7 @@ namespace WebStore.ServiceHosting.Controllers
             if(result)
                 _Logger.LogInformation("Сотрудник с id:{0} успешно удалён", id);
             else
-                _Logger.LogWarning("ошибка при попытке удаления сотрдуника с id:{0}", id);
+                _Logger.LogWarning("ошибка при попытке удаления сотрудника с id:{0}", id);
 
             return result;
         }
