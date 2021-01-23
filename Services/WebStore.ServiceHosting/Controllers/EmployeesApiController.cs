@@ -65,6 +65,9 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpPut/*("{id}")*/]
         public void Update(/*int id,*/ Employee employee) => _EmployeesData.Update(employee);
 
+        /// <summary>Удаление сотрудника по его id</summary>
+        /// <param name="id">Идентификатор удаляемого сотрудника</param>
+        /// <returns>Истина, если сотрудник был удалён</returns>
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
