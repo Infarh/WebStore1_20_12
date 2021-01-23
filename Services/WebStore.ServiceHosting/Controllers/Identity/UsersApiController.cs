@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -148,6 +150,149 @@ namespace WebStore.ServiceHosting.Controllers.Identity
         [HttpPost("GetUsersForClaim")]
         public async Task<IList<User>> GetUsersForClaimAsync([FromBody] Claim claim) =>
             await _UserStore.GetUsersForClaimAsync(claim);
+
+        #endregion
+
+        #region TwoFactor
+
+        [HttpPost("GetTwoFactorEnabled")]
+        public async Task<bool> GetTwoFactorEnabledAsync([FromBody] User user) => await _UserStore.GetTwoFactorEnabledAsync(user);
+
+        [HttpPost("SetTwoFactor/{enable}")]
+        public async Task<bool> SetTwoFactorEnabledAsync([FromBody] User user, bool enable)
+        {
+            await _UserStore.SetTwoFactorEnabledAsync(user, enable);
+            await _UserStore.UpdateAsync(user);
+            return user.TwoFactorEnabled;
+        }
+
+        #endregion
+
+        #region Email/Phone
+
+        [HttpPost("GetEmail")]
+        public async Task<string> GetEmailAsync([FromBody] User user) => await _UserStore.GetEmailAsync(user);
+
+        [HttpPost("SetEmail/{email}")]
+        public async Task<string> SetEmailAsync([FromBody] User user, string email)
+        {
+            await _UserStore.SetEmailAsync(user, email);
+            await _UserStore.UpdateAsync(user);
+            return user.Email;
+        }
+
+        [HttpPost("GetEmailConfirmed")]
+        public async Task<bool> GetEmailConfirmedAsync([FromBody] User user) => await _UserStore.GetEmailConfirmedAsync(user);
+
+        [HttpPost("SetEmailConfirmed/{enable}")]
+        public async Task<bool> SetEmailConfirmedAsync([FromBody] User user, bool enable)
+        {
+            await _UserStore.SetEmailConfirmedAsync(user, enable);
+            await _UserStore.UpdateAsync(user);
+            return user.EmailConfirmed;
+        }
+
+        [HttpGet("UserFindByEmail/{email}")]
+        public async Task<User> FindByEmailAsync(string email) => await _UserStore.FindByEmailAsync(email);
+
+        [HttpPost("GetNormalizedEmail")]
+        public async Task<string> GetNormalizedEmailAsync([FromBody] User user) => await _UserStore.GetNormalizedEmailAsync(user);
+
+        [HttpPost("SetNormalizedEmail/{email?}")]
+        public async Task<string> SetNormalizedEmailAsync([FromBody] User user, string email)
+        {
+            await _UserStore.SetNormalizedEmailAsync(user, email);
+            await _UserStore.UpdateAsync(user);
+            return user.NormalizedEmail;
+        }
+
+        [HttpPost("GetPhoneNumber")]
+        public async Task<string> GetPhoneNumberAsync([FromBody] User user) => await _UserStore.GetPhoneNumberAsync(user);
+
+        [HttpPost("SetPhoneNumber/{phone}")]
+        public async Task<string> SetPhoneNumberAsync([FromBody] User user, string phone)
+        {
+            await _UserStore.SetPhoneNumberAsync(user, phone);
+            await _UserStore.UpdateAsync(user);
+            return user.PhoneNumber;
+        }
+
+        [HttpPost("GetPhoneNumberConfirmed")]
+        public async Task<bool> GetPhoneNumberConfirmedAsync([FromBody] User user) =>
+            await _UserStore.GetPhoneNumberConfirmedAsync(user);
+
+        [HttpPost("SetPhoneNumberConfirmed/{confirmed}")]
+        public async Task<bool> SetPhoneNumberConfirmedAsync([FromBody] User user, bool confirmed)
+        {
+            await _UserStore.SetPhoneNumberConfirmedAsync(user, confirmed);
+            await _UserStore.UpdateAsync(user);
+            return user.PhoneNumberConfirmed;
+        }
+
+        #endregion
+
+        #region Login/Lockout
+
+        [HttpPost("AddLogin")]
+        public async Task AddLoginAsync([FromBody] AddLoginDTO login, [FromServices] WebStoreDB db)
+        {
+            await _UserStore.AddLoginAsync(login.User, login.UserLoginInfo);
+            await db.SaveChangesAsync();
+        }
+
+        [HttpPost("RemoveLogin/{LoginProvider}/{ProviderKey}")]
+        public async Task RemoveLoginAsync([FromBody] User user, string LoginProvider, string ProviderKey, [FromServices] WebStoreDB db)
+        {
+            await _UserStore.RemoveLoginAsync(user, LoginProvider, ProviderKey);
+            await db.SaveChangesAsync();
+        }
+
+        [HttpPost("GetLogins")]
+        public async Task<IList<UserLoginInfo>> GetLoginsAsync([FromBody] User user) => await _UserStore.GetLoginsAsync(user);
+
+        [HttpGet("User/FindByLogin/{LoginProvider}/{ProviderKey}")]
+        public async Task<User> FindByLoginAsync(string LoginProvider, string ProviderKey) => await _UserStore.FindByLoginAsync(LoginProvider, ProviderKey);
+
+        [HttpPost("GetLockoutEndDate")]
+        public async Task<DateTimeOffset?> GetLockoutEndDateAsync([FromBody] User user) => await _UserStore.GetLockoutEndDateAsync(user);
+
+        [HttpPost("SetLockoutEndDate")]
+        public async Task<DateTimeOffset?> SetLockoutEndDateAsync([FromBody] SetLockoutDTO LockoutInfo)
+        {
+            await _UserStore.SetLockoutEndDateAsync(LockoutInfo.User, LockoutInfo.LockoutEnd);
+            await _UserStore.UpdateAsync(LockoutInfo.User);
+            return LockoutInfo.User.LockoutEnd;
+        }
+
+        [HttpPost("IncrementAccessFailedCount")]
+        public async Task<int> IncrementAccessFailedCountAsync([FromBody] User user)
+        {
+            var count = await _UserStore.IncrementAccessFailedCountAsync(user);
+            await _UserStore.UpdateAsync(user);
+            return count;
+        }
+
+        [HttpPost("ResetAccessFailedCount")]
+        public async Task<int> ResetAccessFailedCountAsync([FromBody] User user)
+        {
+            await _UserStore.ResetAccessFailedCountAsync(user);
+            await _UserStore.UpdateAsync(user);
+            return user.AccessFailedCount;
+        }
+
+        [HttpPost("GetAccessFailedCount")]
+        public async Task<int> GetAccessFailedCountAsync([FromBody] User user) => await _UserStore.GetAccessFailedCountAsync(user);
+
+        [HttpPost("GetLockoutEnabled")]
+        public async Task<bool> GetLockoutEnabledAsync([FromBody] User user) => await _UserStore.GetLockoutEnabledAsync(user);
+
+        [HttpPost("SetLockoutEnabled/{enable}")]
+        public async Task<bool> SetLockoutEnabledAsync([FromBody] User user, bool enable)
+        {
+            await _UserStore.SetLockoutEnabledAsync(user, enable);
+            await _UserStore.UpdateAsync(user);
+            return user.LockoutEnabled;
+        }
 
         #endregion
     }
