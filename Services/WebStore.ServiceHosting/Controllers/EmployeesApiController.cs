@@ -45,7 +45,7 @@ namespace WebStore.ServiceHosting.Controllers
             var id = _EmployeesData.Add(employee);
 
             if (id > 0)
-                _Logger.LogInformation("Cотрудник [id:{0}] {1} {2} {3} добавлен успешно",
+                _Logger.LogInformation("Сотрудник [id:{0}] {1} {2} {3} добавлен успешно",
                     employee.Id, employee.LastName, employee.FirstName, employee.Patronymic);
             else
                 _Logger.LogWarning("Ошибка при добавлении сотрудника {0} {1} {2}",
@@ -64,7 +64,7 @@ namespace WebStore.ServiceHosting.Controllers
             if(result)
                 _Logger.LogInformation("Сотрудник с id:{0} успешно удалён", id);
             else
-                _Logger.LogWarning("ошибка при попытке удаления сотрдуника с id:{0}", id);
+                _Logger.LogWarning("ошибка при попытке удаления сотрудника с id:{0}", id);
 
             return result;
         }
