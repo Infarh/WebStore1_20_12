@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.ServiceHosting", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Clients", "Services\WebStore.Clients\WebStore.Clients.csproj", "{6DDE8CC9-5B99-403D-B0BA-C9B365F738AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Console", "UI\WebStore.Console\WebStore.Console.csproj", "{DE1665D0-D454-409B-9B91-2B519BF24C0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Console", "UI\WebStore.Console\WebStore.Console.csproj", "{DE1665D0-D454-409B-9B91-2B519BF24C0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Logger", "Common\WebStore.Logger\WebStore.Logger.csproj", "{92BA0FF1-FACC-4016-B552-C4E9C59E78EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{DE1665D0-D454-409B-9B91-2B519BF24C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE1665D0-D454-409B-9B91-2B519BF24C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE1665D0-D454-409B-9B91-2B519BF24C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92BA0FF1-FACC-4016-B552-C4E9C59E78EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92BA0FF1-FACC-4016-B552-C4E9C59E78EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92BA0FF1-FACC-4016-B552-C4E9C59E78EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92BA0FF1-FACC-4016-B552-C4E9C59E78EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{77D11409-927B-44A9-93E2-0017D36093A9} = {2A828FAB-D10B-4C25-93E6-D7A9928520BE}
 		{6DDE8CC9-5B99-403D-B0BA-C9B365F738AA} = {2A828FAB-D10B-4C25-93E6-D7A9928520BE}
 		{DE1665D0-D454-409B-9B91-2B519BF24C0C} = {B5D7B27D-39D0-4762-86E5-B6696F366154}
+		{92BA0FF1-FACC-4016-B552-C4E9C59E78EE} = {D216922D-5923-445F-96E2-CD256A4FEC73}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46EB41B1-EDB9-4CF4-944B-789B8E104404}
