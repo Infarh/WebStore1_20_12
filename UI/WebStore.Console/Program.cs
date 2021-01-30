@@ -1,8 +1,6 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using WebStore.Clients.Employees;
 using WebStore.Clients.Products;
 
 namespace WebStore.Console
