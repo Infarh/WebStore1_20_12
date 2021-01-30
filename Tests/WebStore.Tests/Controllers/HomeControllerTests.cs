@@ -69,7 +69,7 @@ namespace WebStore.Tests.Controllers
         public void Throw_thrown_ApplicationException()
         {
             var controller = new HomeController();
-            var expected_exception_message = "Test";
+            const string expected_exception_message = "Test";
 
             var result = controller.Throw(expected_exception_message);
         }
@@ -78,7 +78,7 @@ namespace WebStore.Tests.Controllers
         public void Throw_thrown_ApplicationException2()
         {
             var controller = new HomeController();
-            var expected_exception_message = "Test";
+            const string expected_exception_message = "Test";
 
             Exception actual_exception = null;
             try
@@ -98,10 +98,36 @@ namespace WebStore.Tests.Controllers
         public void Throw_thrown_ApplicationException3()
         {
             var controller = new HomeController();
-            var expected_exception_message = "Test";
+            const string expected_exception_message = "Test";
 
             var actual_exception = Assert.Throws<ApplicationException>(() => controller.Throw(expected_exception_message));
             Assert.Equal(expected_exception_message, actual_exception.Message);
+        }
+
+        [TestMethod]
+        public void Error404_Returns_View()
+        {
+            var controller = new HomeController();
+
+            var result = controller.Error404();
+
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [TestMethod]
+        public void ErrorStatus_404_RedirectTo_Error404()
+        {
+            var controller = new HomeController();
+            const string error_status_code = "404";
+            const string expected_action_name = nameof(HomeController.Error404);
+
+            var result = controller.ErrorStatus(error_status_code);
+
+            //Assert.NotNull(result);
+
+            var redirect_to_action = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal(expected_action_name, redirect_to_action.ActionName);
+            Assert.Null(redirect_to_action.ControllerName);
         }
     }
 }
