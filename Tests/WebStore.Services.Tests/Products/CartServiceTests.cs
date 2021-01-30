@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Moq;
+using WebStore.Domain;
+using WebStore.Domain.DTO.Products;
 using WebStore.Domain.Entities;
 using WebStore.Domain.ViewModels;
+using WebStore.Interfaces.Services;
 using Assert = Xunit.Assert;
 
 namespace WebStore.Services.Tests.Products
@@ -12,6 +15,9 @@ namespace WebStore.Services.Tests.Products
     public class CartServiceTests
     {
         private Cart _Cart;
+        private Mock<IProductData> _ProductDataMock;
+
+        private ICartService _CartService;
 
         [TestInitialize]
         public void Initialize()
@@ -24,6 +30,15 @@ namespace WebStore.Services.Tests.Products
                     new() { ProductId = 2, Quantity = 3 },
                 }
             };
+
+            _ProductDataMock = new Mock<IProductData>();
+            _ProductDataMock
+               .Setup(c => c.GetProducts(It.IsAny<ProductFilter>()))
+               .Returns(new ProductDTO[]
+                {
+                    new(1, "Product 1", 0, 1.1m, "Product1.png", new BrandDTO(1, "Brand 1", 1, 1), new SectionDTO(1, "Section 1", 1, null, 1)),
+                    new(1, "Product 2", 1, 2.2m, "Product2.png", new BrandDTO(2, "Brand 2", 2, 1), new SectionDTO(2, "Section 2", 2, null, 1)),
+                });
         }
 
         [TestMethod]
