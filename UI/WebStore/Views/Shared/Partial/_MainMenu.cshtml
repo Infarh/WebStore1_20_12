@@ -1,20 +1,29 @@
 ﻿<ul class="nav navbar-nav collapse navbar-collapse">
     <li><a asp-controller="Home" asp-action="Index" class="active">Домой</a></li>
     <li class="dropdown">
-        <a href="#">Магазин<i class="fa fa-angle-down"></i></a>
+        <a ws-is-active-route ws-ignore-action asp-controller="Catalog" asp-action="Shop">Магазин<i class="fa fa-angle-down"></i></a>
         <ul role="menu" class="sub-menu">
-            <li><a asp-controller="Catalog" asp-action="Shop">Каталог</a></li>
+            <li><a ws-is-active-route asp-controller="Catalog" asp-action="Shop">Каталог</a></li>
         </ul>
     </li>
     <li class="dropdown">
-        <a asp-controller="Home" asp-action="Blogs">Блоги<i class="fa fa-angle-down"></i></a>
+        <a ws-is-active-route asp-controller="Home" asp-action="Blogs">Блоги<i class="fa fa-angle-down"></i></a>
         <ul role="menu" class="sub-menu">
-            <li><a asp-controller="Home" asp-action="Blogs">Блоги покупателей</a></li>
-            <li><a asp-controller="Home" asp-action="Blogs">Блог магазина</a></li>
+            <li><a ws-is-active-route asp-controller="Home" asp-action="Blogs">Блоги покупателей</a></li>
+            <li><a ws-is-active-route asp-controller="Home" asp-action="Blogs">Блог магазина</a></li>
         </ul>
     </li>
-    <li><a asp-controller="Home" asp-action="Index">404</a></li>
-    <li><a asp-controller="Home" asp-action="ContactUs">Контакты</a></li>
-    <li><a asp-controller="Employees" asp-action="Index">Сотрудники</a></li>
-    <li><a asp-controller="WebAPI" asp-action="Index">WebAPI</a></li>
+    <li><a ws-is-active-route asp-controller="Home" asp-action="Index">404</a></li>
+    <li><a ws-is-active-route asp-controller="Home" asp-action="ContactUs">Контакты</a></li>
+    <li><a asp-controller="Employees" asp-action="Index" class=@IsActive("Employees")>Сотрудники</a></li>
+    <li><a ws-is-active-route asp-controller="WebAPI" asp-action="Index">WebAPI</a></li>
 </ul>
+
+@functions
+{
+    string IsActive(string Controller, string Action = "Index") =>
+        Equals(Controller, ViewContext.RouteData.Values["Controller"])
+            && Equals(Action, ViewContext.RouteData.Values["Action"])
+            ? "active"
+            : null;
+}
