@@ -21,6 +21,7 @@
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
+    <PackageReference Include="SimpleMvcSitemap" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
