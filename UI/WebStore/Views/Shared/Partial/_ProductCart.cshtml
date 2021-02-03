@@ -7,7 +7,12 @@
                 <img src="~/images/shop/@Model.ImageUrl" alt="" />
                 <h2>@Model.Price.ToString("C")</h2>
                 <p>
-                    <a asp-controller="Catalog" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a>
+                    <a asp-controller="Catalog" asp-action="Details"
+                       asp-route-id="@Model.Id"
+                       asp-route-SectionId="@Context.Request.Query["SectionId"]"
+                       asp-route-BrandId="@Context.Request.Query["BrandId"]">
+                        @Model.Name
+                    </a>
                 </p>
                 <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" 
                    class="btn btn-default add-to-cart">
@@ -18,7 +23,12 @@
                 <div class="overlay-content">
                     <h2>@Model.Price.ToString("C")</h2>
                     <p>
-                        <a asp-controller="Catalog" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a>
+                        <a asp-controller="Catalog" asp-action="Details"
+                           asp-route-id="@Model.Id"
+                           asp-route-SectionId="@Context.Request.Query["SectionId"]"
+                           asp-route-BrandId="@Context.Request.Query["BrandId"]">
+                            @Model.Name
+                        </a>
                     </p>
                     <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" 
                        class="btn btn-default add-to-cart">

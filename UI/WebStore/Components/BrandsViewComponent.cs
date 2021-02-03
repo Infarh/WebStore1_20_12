@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Microsoft.AspNetCore.Mvc;
+
 using WebStore.Domain.ViewModels;
 using WebStore.Interfaces.Services;
 
@@ -13,7 +14,11 @@ namespace WebStore.Components
 
         public BrandsViewComponent(IProductData ProductData) => _ProductData = ProductData;
 
-        public IViewComponentResult Invoke(string BrandId) => View(GetBrands());
+        public IViewComponentResult Invoke(string BrandId)
+        {
+            ViewBag.BrandId = int.TryParse(BrandId, out var id) ? id : (int?)null;
+            return View(GetBrands());
+        }
 
         private IEnumerable<BrandViewModel> GetBrands() =>
             _ProductData.GetBrands()
