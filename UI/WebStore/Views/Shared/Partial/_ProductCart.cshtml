@@ -15,6 +15,7 @@
                     </a>
                 </p>
                 <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" 
+                   data-id="@Model.Id"
                    class="btn btn-default add-to-cart">
                     <i class="fa fa-shopping-cart"></i>Добавить в корзину
                 </a>
@@ -31,6 +32,7 @@
                         </a>
                     </p>
                     <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" 
+                       data-id="@Model.Id"
                        class="btn btn-default add-to-cart">
                         <i class="fa fa-shopping-cart"></i>Добавить в корзину
                     </a>
