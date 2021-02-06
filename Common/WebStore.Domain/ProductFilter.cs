@@ -2,10 +2,14 @@
 {
     public class ProductFilter
     {
-        public int? SectionId { get; set; }
+        public int? SectionId { get; init; }
         
-        public int? BrandId { get; set; }
+        public int? BrandId { get; init; }
         
-        public int[] Ids { get; set; }
+        public int[] Ids { get; init; }
+
+        public int Page { get; init; }
+
+        public int? PageSize { get; init; }
     }
 }

@@ -64,7 +64,8 @@
                                 <label>Количество:</label>
                                 <input type="text" value="3" />
                                 <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id"
-                                   class="btn btn-default cart">
+                                   data-id="@Model.Id"
+                                   class="btn btn-default cart add-to-cart">
                                     <i class="fa fa-shopping-cart"></i>
                                     В корзину
                                 </a>
