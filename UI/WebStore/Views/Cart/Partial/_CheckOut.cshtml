@@ -31,13 +31,13 @@
                 ViewData.TryGetValue("TotalPrice", out var total_price);
             }
             
-            @if (total_price is decimal price && price > 0)
+            @if (total_price is decimal price and > 0)
             {
                 <div class="total_area">
                     <ul>
                         <li>Налог: 0</li>
                         <li>Доставка: 0</li>
-                        <li>Итого: <span>@price.ToString("C")</span></li>
+                        <li>Итого: <span id="total-order-price">@price.ToString("C")</span></li>
                     </ul>
                     <input class="btn btn-default check_out" type="submit" value="Оформить"/>
                 </div>
