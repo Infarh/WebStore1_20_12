@@ -36,11 +36,11 @@ namespace WebStore.Services.Tests.Products
             _ProductDataMock = new Mock<IProductData>();
             _ProductDataMock
                .Setup(c => c.GetProducts(It.IsAny<ProductFilter>()))
-               .Returns(new ProductDTO[]
+               .Returns(new PageProductsDTO(new ProductDTO[]
                 {
                     new(1, "Product 1", 0, 1.1m, "Product1.png", new BrandDTO(1, "Brand 1", 1, 1), new SectionDTO(1, "Section 1", 1, null, 1)),
                     new(2, "Product 2", 1, 2.2m, "Product2.png", new BrandDTO(2, "Brand 2", 2, 1), new SectionDTO(2, "Section 2", 2, null, 1)),
-                });
+                }, 2));
 
             _CartStoreMock = new Mock<ICartStore>();
             _CartStoreMock.Setup(c => c.Cart).Returns(_Cart);
