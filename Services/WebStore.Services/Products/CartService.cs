@@ -75,11 +75,16 @@ namespace WebStore.Services.Products
                 Ids = _CartStore.Cart.Items.Select(item => item.ProductId).ToArray()
             });
 
-            var product_view_models = products.FromDTO().ToView().ToDictionary(p => p.Id);
+            var product_view_models = products.FromDTO().ToView();//.ToDictionary(p => p.Id);
 
             return new CartViewModel
             {
-                Items = _CartStore.Cart.Items.Select(item => (product_view_models[item.ProductId], item.Quantity))
+                Items = _CartStore.Cart.Items.Join(product_view_models,
+                    item => item.ProductId,
+                    product => product.Id,
+                    (item, product) => (product, item.Quantity))
+                   
+                   //.Select(item => (product_view_models[item.ProductId], item.Quantity))
             };
         }
     }
