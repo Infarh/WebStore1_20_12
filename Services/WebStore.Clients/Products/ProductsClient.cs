@@ -22,11 +22,14 @@ namespace WebStore.Clients.Products
 
         public BrandDTO GetBrandById(int id) => Get<BrandDTO>($"{Address}/brands/{id}");
 
-        public PageProductsDTO GetProducts(ProductFilter Filter = null) =>
-            Post(Address, Filter ?? new ProductFilter())
-               .Content
+        public PageProductsDTO GetProducts(ProductFilter Filter = null)
+        {
+            var response = Post(Address, Filter ?? new ProductFilter());
+            var result = response.Content
                .ReadAsAsync<PageProductsDTO>()
                .Result;
+            return result;
+        }
 
         public ProductDTO GetProductById(int id) => Get<ProductDTO>($"{Address}/{id}");
     }
