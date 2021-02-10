@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Чат";
+}
+
+<div class="container">
+    <h4>Пример чата</h4>
+    
+    <div>
+        <div id="input-form">
+            <input type="text" id="message"/>
+            <input type="button" class="btn btn-default" id="send-message" value="Отправить"/>
+        </div>
+        
+        <ul id="information-block"></ul>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script src="~/lib/SignalR/signalr.min.js"></script>
+    
+    <script>
+        const hub_url = "/chat";
+
+        const connection = new signalR.HubConnectionBuilder().withUrl(hub_url).build();
+
+        connection.on("MessageFromClient", data => $("#information-block").prepend($("<li></li>").html(data)));
+
+        $("#send-message").click(e => connection.invoke("SendMessage", $("#message").val()));
+
+        connection.start();
+    </script>
+}
