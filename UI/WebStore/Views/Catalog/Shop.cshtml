@@ -3,7 +3,6 @@
     ViewData["Title"] = "Каталог товаров";
 }
 
-
 <partial name="Partial/_Advertisement"/>
 
 <section>
@@ -31,3 +30,15 @@
     </div>
 </section>
 
+@section Scripts
+{
+    <script src="~/lib/jquery-loading-overlay/loadingoverlay.min.js"></script>
+    <script src="~/js/Catalog/CatalogLogik.js" asp-append-version="true"></script>
+    <script>
+        $(function() {
+            Catalog.init({
+                getViewLink: "@Url.Action("GetFeaturedItems","Catalog")"
+            });
+        })
+    </script>
+}

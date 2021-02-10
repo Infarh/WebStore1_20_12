@@ -13,11 +13,14 @@
     {
       "library": "jquery@1.10.2",
       "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "font-awesome@4.0.2",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "jquery-loading-overlay@2.1.7",
+      "destination": "wwwroot/lib/jquery-loading-overlay/"
     }
-  ,
-{
-  "library": "font-awesome@4.0.2",
-  "destination": "wwwroot/lib/font-awesome/"
-}
-]
+  ]
 }
