@@ -16,7 +16,14 @@
     <li><a ws-is-active-route asp-controller="Home" asp-action="Index">404</a></li>
     <li><a ws-is-active-route asp-controller="Home" asp-action="ContactUs">Контакты</a></li>
     <li><a asp-controller="Employees" asp-action="Index" class=@IsActive("Employees")>Сотрудники</a></li>
-    <li><a ws-is-active-route asp-controller="WebAPI" asp-action="Index">WebAPI</a></li>
+    <li class="dropdown">
+        <a ws-is-active-route href="#">Tests<i class="fa fa-angle-down"></i></a>
+        <ul role="menu" class="sub-menu">
+            <li><a ws-is-active-route asp-controller="WebAPI" asp-action="Index">WebAPI</a></li>
+            <li><a ws-is-active-route asp-controller="AjaxTest" asp-action="Index">Ajax</a></li>
+            <li><a ws-is-active-route asp-controller="AjaxTest" asp-action="SignalRTest">SignalR</a></li>
+        </ul>
+    </li>
 </ul>
 
 @functions

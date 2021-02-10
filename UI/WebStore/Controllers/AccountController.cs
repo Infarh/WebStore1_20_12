@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper.Configuration.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,15 @@ namespace WebStore.Controllers
         }
 
         #region Регистрация нового пользователя
+
+        [AllowAnonymous]
+        public async Task<IActionResult> IsNameFree(string UserName)
+        {
+            _Logger.LogInformation($"Запрос проверки занятости имени пользвоателя {UserName}");
+
+            var user = await _UserManager.FindByNameAsync(UserName);
+            return Json(user is null ? "true" : "Пользователь с таким имененм уже существует");
+        }
 
         [AllowAnonymous]
         public IActionResult Register() => View(new RegisterUserViewModel());
